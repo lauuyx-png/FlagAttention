@@ -19,6 +19,7 @@ FlagAttention now offers several operators.
 2. **piecewise_attention**: An extension used for NLPE(Non-Linearized position embedding) in both training and inference of the [Aquila-2-34B](https://github.com/FlagAI-Open/Aquila2) model.
 3. **flash_attention_split_kv**: A split-KV flash decoding operator for long KV sequences and grouped-query layouts.
 4. **paged_attention**: A paged KV-cache attention operator for inference.
+5. **fused_attnres**: A forward-only TLE kernel for Kimi K3 Attention Residuals aggregation, with optional output RMSNorm fusion.
 
 When further customization is required, FlagAttention serves as an example.
 
@@ -130,9 +131,30 @@ The benchmarking process involves comparing the Triton implementations with coun
 cd benchmark/
 python flash_benchmark.py
 python piecewise_benchmark.py
+python attnres_benchmark.py
 ```
 
 ## Operators
+
+### fused_attnres
+
+`fused_attnres` scores RMS-normalized residual sources with a learned query,
+applies a softmax over the source/depth axis, and mixes the original residuals.
+It uses an online softmax so each residual element is read once and can fuse the
+output RMSNorm used by the following sublayer. The current implementation is a
+forward-only inference kernel and requires a Triton build with TLE support.
+
+```python
+fused_attnres(
+    query,
+    residuals,
+    rms_weight,
+    output_rms_weight=None,
+    rms_eps=1e-6,
+    scale=1.0,
+    return_weights=False,
+)
+```
 
 ### flash_attention
 

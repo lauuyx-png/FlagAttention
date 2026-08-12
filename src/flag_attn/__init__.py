@@ -25,5 +25,6 @@ from flag_attn.flash import attention as flash_attention # noqa: F401
 from flag_attn.split_kv import attention as flash_attention_split_kv # noqa: F401
 from flag_attn.paged import attention as paged_attention # noqa: F401
 from flag_attn.gated_delta_rule import chunk_gated_delta_rule # noqa: F401
+from flag_attn.attnres import fused_attnres # noqa: F401
 
 from flag_attn import testing # noqa: F401
