@@ -131,7 +131,13 @@ The benchmarking process involves comparing the Triton implementations with coun
 cd benchmark/
 python flash_benchmark.py
 python piecewise_benchmark.py
-python attnres_benchmark.py
+```
+
+The optional AttnRes benchmark uses the same pytest test module as its
+correctness coverage and compares against FLA:
+
+```sh
+FLAG_ATTN_RUN_EXTERNAL_BENCHMARKS=1 pytest tests/flag_attn/test_attnres.py -k benchmark -s
 ```
 
 ## Operators
