@@ -134,7 +134,10 @@ python piecewise_benchmark.py
 ```
 
 The optional AttnRes benchmark uses the same pytest test module as its
-correctness coverage and compares against FLA:
+correctness coverage and compares preallocated forward kernels against FLA.
+Python wrappers, tensor allocation, and residual pointer-table construction are
+excluded. The benchmark uses public FLA commit `5aea42b7740f9968f6418c6c60b78ea785ce6140`
+and FlagTree commit `aaa420f9366440e18bd83a0391c2d2dbcc5e0b81`.
 
 ```sh
 FLAG_ATTN_RUN_EXTERNAL_BENCHMARKS=1 pytest tests/flag_attn/test_attnres.py -k benchmark -s
