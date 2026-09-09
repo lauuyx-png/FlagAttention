@@ -47,7 +47,7 @@ def _load_fla_reference():
 
 
 FLA_FUSED_ATTNRES, FLA_ATTNRES_MODULE, FLA_IMPORT_ERROR = _load_fla_reference()
-FLAG_ATTNRES_MODULE = importlib.import_module("flag_attn.attnres")
+FLAG_ATTNRES_MODULE = importlib.import_module("flag_attn.FLA.attnres")
 
 
 def _tle_available() -> bool:
@@ -71,6 +71,13 @@ def _bench(fn):
         rep=ATTNRES_BENCHMARK_REP_MS,
         return_mode="median",
     )
+
+
+def test_fused_attnres_public_export():
+    from flag_attn.FLA.attnres import fused_attnres
+
+    assert flag_attn.fused_attnres is fused_attnres
+    assert "fused_attnres" in flag_attn.__all__
 
 
 @pytest.mark.parametrize(

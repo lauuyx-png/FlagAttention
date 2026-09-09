@@ -153,7 +153,12 @@ It uses an online softmax so each residual element is read once and can fuse the
 output RMSNorm used by the following sublayer. The current implementation is a
 forward-only inference kernel and requires a Triton build with TLE support.
 
+The implementation lives in [src/flag_attn/FLA/attnres.py](src/flag_attn/FLA/attnres.py).
+The public `flag_attn.fused_attnres` entry point is preserved through a lazy export.
+
 ```python
+from flag_attn import fused_attnres
+
 fused_attnres(
     query,
     residuals,
